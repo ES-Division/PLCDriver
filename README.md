@@ -42,7 +42,7 @@ ArxPLCBroker PLC Driver Sample Code
 | abstract bool writes(Dictionary<string, Dictionary<string, object>> dicData) | 복수 요청 태그에 대한 PLC 메모리 데이터 쓰기 함수 |
 | abstract bool write(string equipmentCode, string tagName, object data) | 단일 요청 태그에 대한 PLC 메모리 데이터 쓰기 함수 |
 
-1. **TagInfo**
+2. **TagInfo**
 
 | Attribute Members | Description | Type |
 | --- | --- | --- |
@@ -54,7 +54,7 @@ ArxPLCBroker PLC Driver Sample Code
 | memoryName | PLC 메모리 영역 | string |
 | memoryType | PLC 메모리 접근 타입 | string |
 | isHex | PLC 메모리 주소 Hex 표현 여부 | bool |
-1. **DriverInfo**
+3. **DriverInfo**
 
 | Attribute Members | Description | Type |
 | --- | --- | --- |
@@ -73,9 +73,9 @@ ArxPLCBroker PLC Driver Sample Code
 | --- | --- |
 | Description | PLC Driver의 정보를 반환합니다. |
 | Parameters | N/A |
-| Return Value | Type : DriverInfo , Description : PLC Driver 정보 정의 Class
-[실패 시 null 반환] |
-1. **setTagInfo**
+| Return Value | Type : DriverInfo , Description : PLC Driver 정보 정의 Class [실패 시 null 반환] |
+
+2. **setTagInfo**
 
 |  | public abstract bool setTagInfo(string path) |
 | --- | --- |
@@ -85,64 +85,60 @@ ArxPLCBroker PLC Driver Sample Code
 
 <aside>
 💡 PLC와 인터페이스를 하기 위해 PLC Driver 생성 후에 setTagInfo 함수를 호출해야 한다.
-
 </aside>
 
-1. **connect**
+3. **connect**
 
 |  | public abstract bool connect() |
 | --- | --- |
 | Description | 설정된 IP, Port 정보로 PLC에 연결을 요청합니다. |
 | Parameters | N/A |
 | Return Value | Type : bool , Description : 연결 성공 여부 |
-1. **disConnect**
+
+4. **disConnect**
 
 |  | public abstract bool disConnect() |
 | --- | --- |
 | Description | 연결된 PLC와 연결 종료를 요청합니다. |
 | Parameters | N/A |
 | Return Value | Type : bool , Description : 연결 종료 성공 여부 |
-1. **readAllData**
+
+5. **readAllData**
 
 |  | public abstract Tuple<bool, Dictionary<string, Dictionary<string, object>>> readAllData() |
 | --- | --- |
 | Description | 설정된 PLC Mapping List 의 메모리 데이터 전부 읽어 옵니다. |
 | Parameters | N/A |
-| Return Value | <Tuple>
-Type : bool , Description : 데이터 읽기 성공 여부
-Type : Dictionary<string, Dictionary<string, object>> : 설정된 모든 PLC 메모리 데이터 집합체
-[key : [string]설비 구분 코드, value : <key : [string]메모리 주소 이름, value : [object] PLC 메모리 데이터 - 메모리 주소(key) 매칭 데이터 읽기 실패 시 null(value)>] |
-1. **reads**
+| Return Value | <Tuple> Type : bool , Description : 데이터 읽기 성공 여부 Type : Dictionary<string, Dictionary<string, object>> : 설정된 모든 PLC 메모리 데이터 집합체 [key : [string]설비 구분 코드, value : <key : [string]메모리 주소 이름, value : [object] PLC 메모리 데이터 - 메모리 주소(key) 매칭 데이터 읽기 실패 시 null(value)>] |
+
+6. **reads**
 
 |  | public abstract bool reads(Dictionary<string, Dictionary<string, object>> dicData) |
 | --- | --- |
 | Description | 사용자가 요청한 여러 메모리 데이터를 읽어 옵니다. |
-| Parameters | Type : Dictionary<string, Dictionary<string, object>> : 요청한  PLC 메모리 데이터 집합체
-[key : [string] 설비 구분 코드, value : < key : [string] 메모리 주소 이름, value : [object] PLC 메모리 데이터 - 메모리 주소(key) 매칭 데이터 읽기 실패 시 null(value) >] / |
+| Parameters | Type : Dictionary<string, Dictionary<string, object>> : 요청한  PLC 메모리 데이터 집합체 [key : [string] 설비 구분 코드, value : < key : [string] 메모리 주소 이름, value : [object] PLC 메모리 데이터 - 메모리 주소(key) 매칭 데이터 읽기 실패 시 null(value) >] / |
 | Return Value | Type : bool , Description : 데이터 읽기 성공 여부 |
-1. **read**
+
+7. **read**
 
 |  | public abstract bool read(string equipmentCode, string tagName, ref object data) |
 | --- | --- |
 | Description | 사용자가 요청한 하나의 메모리 데이터를 읽어 옵니다. |
-| Parameters | Type : string , Decription : 설비 구분 코드
-Type : string , Decription : 읽기 요청 메모리 주소 이름
-Type : object, Description : 반환 받을 PLC 메모리 데이터 |
+| Parameters | Type : string , Decription : 설비 구분 코드 Type : string , Decription : 읽기 요청 메모리 주소 이름 Type : object, Description : 반환 받을 PLC 메모리 데이터 |
 | Return Value | Type : bool , Description : 데이터 읽기 성공 여부 |
-1. **writes**
+
+8. **writes**
 
 |  | public abstract bool writes(Dictionary<string, Dictionary<string, object>> dicData) |
 | --- | --- |
 | Description | 사용자가 요청한 여러 데이터를 요청한 PLC 메모리 주소에 작성합니다. |
-| Parameters | Type : Dictionary<string, Dictionary<string, object>> : 쓰기 요청 PLC 메모리 주소/데이터
-[key : [string] 설비 구분 코드, value : <key : [string] 메모리 주소 이름, value : [object] PLC 메모리 데이터 >] |
+| Parameters | Type : Dictionary<string, Dictionary<string, object>> : 쓰기 요청 PLC 메모리 주소/데이터 [key : [string] 설비 구분 코드, value : <key : [string] 메모리 주소 이름, value : [object] PLC 메모리 데이터 >] |
 | Return Value | Type : bool , Description : 데이터 쓰기 성공 여부 |
-1. **write**
+
+9. **write**
 
 |  | public abstract bool write(string equipmentCode, string tagName, object data) |
 | --- | --- |
 | Description | 사용자가 요청한 하나의 데이터를 요청한 PLC 메모리 주소에 작성합니다. |
-| Parameters | Type : string , Description : 설비 구분 코드
-Type : string , Description : 쓰기 요청 메모리 주소 이름
-Type : object , Description : PLC 메모리에 작성할 데이터 |
+| Parameters | Type : string , Description : 설비 구분 코드 Type : string , Description : 쓰기 요청 메모리 주소 이름 Type : object , Description : PLC 메모리에 작성할 데이터 |
 | Return Value | Type : bool , Description : 데이터 쓰기 성공 여부 |
