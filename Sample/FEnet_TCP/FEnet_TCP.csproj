@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <ApplicationIcon />
+    <OutputType>Exe</OutputType>
+    <StartupObject />
+    <Company>AERIX</Company>
+    <Version>0.0.1</Version>
+    <Description>FEnet_TCP</Description>
+    <Authors>AERIX</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="DriverInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Reference\CommonDriver\DriverInterface.csproj" />
+    <ProjectReference Include="..\Reference\CommonInterface\CommonInterface.csproj" />
+  </ItemGroup>
+
+</Project>
