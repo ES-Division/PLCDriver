@@ -100,7 +100,7 @@ namespace PLCSimulation
         {
             set
             {
-                if(value) // init
+                if (value) // init
                 {
                     bt_Setting.Enabled = true;
                     bt_Start.Enabled = false;
@@ -116,6 +116,24 @@ namespace PLCSimulation
         }
         #endregion
 
+        #region text
+        public String btRandomNoRunningText
+        {
+            get{
+                return "Random Start";
+            }
+        }
+
+        public String btRandomRunningText
+        {
+            get
+            {
+                return "Random Stop";
+            }
+        }
+
+        #endregion
+
         public SimulForm()
         {
             //(MdiParent as Form1).Test();
@@ -127,6 +145,7 @@ namespace PLCSimulation
             bt_End.Enabled = false;
 
             this.Text = "Simulator";
+            this.bt_random.Text = btRandomNoRunningText;
         }
 
         private void bt_Setting_Click(object sender, EventArgs e)
@@ -352,6 +371,30 @@ namespace PLCSimulation
                 this.Top = 0;
             else if (this.Top > this.MdiParent.ClientRectangle.Height - this.Height)
                 this.Top = this.MdiParent.ClientRectangle.Height - this.Height;
+        }
+
+        /*
+         * 랜덤 버튼이 클릭되었을 때 이벤트를 처리하는 함수
+         * 버튼의 텍스트를 이용하여 시작/정지의 상태를 구별한다.
+        */
+        private void bt_random_click(object sender, EventArgs e)
+        {
+            // 랜덤 기능이 활성화되지 않은 경우
+            if (bt_random.Text == btRandomNoRunningText)
+            {
+                // 랜덤 기능 활성화
+                bt_random.Text = btRandomRunningText;
+            }
+            // 랜덤 기능이 활성화 된 경우
+            else if (bt_random.Text == btRandomRunningText) {
+                // 랜덤 기능 비활성화
+                bt_random.Text = btRandomNoRunningText;
+            }
+            else
+            {
+                // 이외의 경우
+                throw new ArgumentException("지정된 기능이 없습니다.");
+            }
         }
     }
 }

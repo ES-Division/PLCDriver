@@ -54,6 +54,7 @@ namespace PLCSimulation
             this.bt_Setting = new System.Windows.Forms.Button();
             this.lb_State = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.bt_random = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -281,11 +282,22 @@ namespace PLCSimulation
             this.label5.TabIndex = 23;
             this.label5.Text = "State :";
             // 
+            // bt_random
+            // 
+            this.bt_random.Location = new System.Drawing.Point(429, 50);
+            this.bt_random.Name = "bt_random";
+            this.bt_random.Size = new System.Drawing.Size(100, 24);
+            this.bt_random.TabIndex = 24;
+            this.bt_random.Text = "Random Start";
+            this.bt_random.UseVisualStyleBackColor = true;
+            this.bt_random.Click += new System.EventHandler(this.bt_random_click);
+            // 
             // SimulForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.bt_random);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.lb_State);
             this.Controls.Add(this.label4);
@@ -305,6 +317,7 @@ namespace PLCSimulation
             this.MinimizeBox = false;
             this.Name = "SimulForm";
             this.Text = "Form2";
+            this.Click += new System.EventHandler(this.bt_random_click);
             this.Move += new System.EventHandler(this.SimulForm_Move);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
@@ -338,5 +351,6 @@ namespace PLCSimulation
         private System.Windows.Forms.Button bt_Setting;
         private System.Windows.Forms.Label lb_State;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button bt_random;
     }
 }
