@@ -471,7 +471,7 @@ namespace PLCSimulation
         void StartRandomValue()
         {
             // 랜덤 기능 활성화
-            if (bt_random.Text == btRandomNoRunningText)
+            if (randomRunning == false)
             {
                 bt_random.Text = btRandomRunningText;
                 randomRunning = true;
@@ -487,7 +487,7 @@ namespace PLCSimulation
         // 랜덤 기능을 비활성화하는 함수
         void StopRandomValue()
         {
-            if (bt_random.Text == btRandomRunningText)
+            if (randomRunning == true)
             {
                 // 랜덤 기능 비활성화
                 bt_random.Text = btRandomNoRunningText;
