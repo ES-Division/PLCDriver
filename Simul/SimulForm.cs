@@ -256,6 +256,8 @@ namespace PLCSimulation
         {
             if (SimulatorClose())
             {
+                this.endRandom();
+
                 lb_State.Text = "Stop";
                 lb_State.ForeColor = Color.Red;
 
@@ -454,33 +456,47 @@ namespace PLCSimulation
 
         // 주기적으로 랜덤하게 값을 채우는 기능을 처리하는 쓰레드
         Thread threadRandom = null;
-        private void bt_random_click(object sender, EventArgs e)
+        void startRandom()
         {
-            // 랜덤 기능이 활성화되지 않은 경우
-            if (bt_random.Text == btRandomNoRunningText)
+            // 랜덤 기능 활성화
+            bt_random.Text = btRandomRunningText;
+            threadRandom = new Thread(() =>
             {
-                // 랜덤 기능 활성화
-                bt_random.Text = btRandomRunningText;
-                threadRandom = new Thread(() =>
+                while (bt_random.Text == btRandomRunningText)
                 {
-                    while (bt_random.Text == btRandomRunningText)
+                    this.Invoke(new Action(delegate ()
                     {
                         bool result = applySimulatorPlcMemoryMapRandom();
-                        if (!result)
-                        {
-                            break;
-                        }
-                    }
-                });
-                threadRandom.Start();
-            }
-            // 랜덤 기능이 활성화 된 경우
-            else if (bt_random.Text == btRandomRunningText) {
+                    }));
+                }
+                Thread.Sleep(1000);
+            });
+            threadRandom.Start();
+        }
+
+        void endRandom()
+        {
+            if (bt_random.Text == btRandomRunningText)
+            {
                 // 랜덤 기능 비활성화
                 bt_random.Text = btRandomNoRunningText;
                 // 종료 대기
                 threadRandom.Join();
                 threadRandom = null;
+            }
+        }
+
+
+        private void bt_random_click(object sender, EventArgs e)
+        {
+            // 랜덤 기능이 활성화되지 않은 경우
+            if (bt_random.Text == btRandomNoRunningText)
+            {
+                startRandom();
+            }
+            // 랜덤 기능이 활성화 된 경우
+            else if (bt_random.Text == btRandomRunningText) {
+                endRandom();   
             }
             else
             {
