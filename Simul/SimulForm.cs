@@ -464,10 +464,7 @@ namespace PLCSimulation
             {
                 while (bt_random.Text == btRandomRunningText)
                 {
-                    this.Invoke(new Action(delegate ()
-                    {
-                        bool result = applySimulatorPlcMemoryMapRandom();
-                    }));
+                    bool result = applySimulatorPlcMemoryMapRandom();
                 }
                 Thread.Sleep(1000);
             });
