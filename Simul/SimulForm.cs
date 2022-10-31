@@ -258,7 +258,7 @@ namespace PLCSimulation
             if (SimulatorClose())
             {
                 // 
-                stopRandomValue();
+                StopRandomValue();
 
                 lb_State.Text = "Stop";
                 lb_State.ForeColor = Color.Red;
@@ -415,6 +415,7 @@ namespace PLCSimulation
         {
             if(sim == null)
             {
+                // 시뮬레이터가 시작되지 않은 경우에는 실행하지 않는다.
                 return;
             }
 
@@ -437,15 +438,17 @@ namespace PLCSimulation
             ApplyPlcMemoryRandom(PLCMemories);
         }
 
-        // 랜덤으로 진행하는 경우
+        // 랜덤 기능의 활성화 유무를 의미하는 변수
+        // 랜덤 기능이 활성화된 경우 : true
+        // 랜덤 기능이 비활성화된 경우 : false
         bool randomRunning = false;
 
-        // 시뮬레이터의 메모리 맵을 랜덤한 값으로 채우는 비동기 함수
-        // 시뮬레이터가 생성된 이후에 호출되어야 합니다.
+        // 시뮬레이터의 메모리 맵을 랜덤한 값으로 채우는 동기 함수
         private void ApplySimulatorPlcMemoryMapRandomSyncRepeat()
         {
             while (randomRunning)
             {
+                // 메모리 맵을 랜덤으로 채우기
                 ApplySimulatorPlcMemoryMapRandom();
                 // 1초간 대기
                 Thread.Sleep(1000);
@@ -453,28 +456,36 @@ namespace PLCSimulation
         }
 
         // 시뮬레이터의 메모리 맵을 랜덤한 값으로 채우는 비동기 함수
-        // 시뮬레이터가 생성된 이후에 호출되어야 합니다.
         async private void ApplySimulatorPlcMemoryMapRandomAsyncRepeat()
         {
             while (randomRunning)
             {
+                // 메모리 맵을 랜덤으로 채우기
                 ApplySimulatorPlcMemoryMapRandom();
                 // 1초간 양보
                 await Task.Delay(1000);
             }
         }
 
-        // 주기적으로 랜덤하게 값을 채우도록 설정하는 함수
+        // 랜덤 기능을 활성화하는 함수
         void StartRandomValue()
         {
             // 랜덤 기능 활성화
-            bt_random.Text = btRandomRunningText;
-            randomRunning = true;
-            ApplySimulatorPlcMemoryMapRandomAsyncRepeat();
+            if (bt_random.Text == btRandomNoRunningText)
+            {
+                bt_random.Text = btRandomRunningText;
+                randomRunning = true;
+                ApplySimulatorPlcMemoryMapRandomAsyncRepeat();
+            }
+            else
+            {
+                // 에러 메시지
+                throw new ArgumentException("랜덤 기능이 활성화 된 상태에서 다시 활성화 시킬 수 없습니다.");
+            }
         }
 
-        // 주기적으로 랜덤하게 값을 채우지 않도록 설정하는 함수
-        void stopRandomValue()
+        // 랜덤 기능을 비활성화하는 함수
+        void StopRandomValue()
         {
             if (bt_random.Text == btRandomRunningText)
             {
@@ -494,18 +505,19 @@ namespace PLCSimulation
             }
             // 랜덤 기능이 활성화 된 경우
             else if (bt_random.Text == btRandomRunningText) {
-                stopRandomValue();   
+                StopRandomValue();   
             }
             else
             {
                 // 이외의 경우
-                throw new ArgumentException("지정된 기능이 없습니다.");
+                throw new ArgumentException("해당되는 상태가 없습니다.");
             }
         }
 
-        // 랜덤으로 값을 지정하는 함수
+        // 한번만 랜덤으로 값을 채우는 버튼의 이벤트를 처리하는 함수
         private void bt_random_once_click(object sender, EventArgs e)
         {
+            // 메모리 맵을 랜덤으로 채우기
             ApplySimulatorPlcMemoryMapRandom();
         }
     }
