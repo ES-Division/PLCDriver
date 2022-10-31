@@ -268,7 +268,7 @@ namespace PLCSimulation
             this.lb_State.AutoSize = true;
             this.lb_State.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.lb_State.ForeColor = System.Drawing.Color.Red;
-            this.lb_State.Location = new System.Drawing.Point(592, 54);
+            this.lb_State.Location = new System.Drawing.Point(474, 59);
             this.lb_State.Name = "lb_State";
             this.lb_State.Size = new System.Drawing.Size(36, 15);
             this.lb_State.TabIndex = 22;
@@ -277,7 +277,7 @@ namespace PLCSimulation
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(554, 55);
+            this.label5.Location = new System.Drawing.Point(429, 59);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(41, 15);
             this.label5.TabIndex = 23;
@@ -285,9 +285,9 @@ namespace PLCSimulation
             // 
             // bt_random
             // 
-            this.bt_random.Location = new System.Drawing.Point(429, 50);
+            this.bt_random.Location = new System.Drawing.Point(677, 50);
             this.bt_random.Name = "bt_random";
-            this.bt_random.Size = new System.Drawing.Size(100, 24);
+            this.bt_random.Size = new System.Drawing.Size(114, 29);
             this.bt_random.TabIndex = 24;
             this.bt_random.Text = "Random Start";
             this.bt_random.UseVisualStyleBackColor = true;
@@ -295,9 +295,9 @@ namespace PLCSimulation
             // 
             // bt_random_once
             // 
-            this.bt_random_once.Location = new System.Drawing.Point(268, 56);
+            this.bt_random_once.Location = new System.Drawing.Point(554, 52);
             this.bt_random_once.Name = "bt_random_once";
-            this.bt_random_once.Size = new System.Drawing.Size(115, 23);
+            this.bt_random_once.Size = new System.Drawing.Size(117, 29);
             this.bt_random_once.TabIndex = 25;
             this.bt_random_once.Text = "Random Once";
             this.bt_random_once.UseVisualStyleBackColor = true;

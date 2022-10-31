@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace PLCSimulation
 {
@@ -256,7 +257,8 @@ namespace PLCSimulation
         {
             if (SimulatorClose())
             {
-                this.endRandom();
+                // 
+                stopRandomValue();
 
                 lb_State.Text = "Stop";
                 lb_State.ForeColor = Color.Red;
@@ -377,123 +379,122 @@ namespace PLCSimulation
                 this.Top = this.MdiParent.ClientRectangle.Height - this.Height;
         }
 
+        /*
+        * Get Memory Mapping
+        * map_M : 0
+        * map_D : 1
+        * map_K : 2
+        * map_L : 3
+        * 
+        * Mapping
+        * zero~nine
+       */
+
         // 매개변수로 들어온 PlcMemory 리스트를 랜덤한 값으로 채우는 함수 
-        private void applyPlcMemoryRandom(List<PLCMemory> plcMemoryList)
+        static private void ApplyPlcMemoryRandom(List<PLCMemory> plcMemoryList)
         {
             plcMemoryList.ForEach(plcMemory =>
             {
                 Random random = new Random();
-                plcMemory.Zero = (ushort)random.Next(65000);
-                plcMemory.One = (ushort)random.Next(65000);
-                plcMemory.Two = (ushort)random.Next(65000);
-                plcMemory.Three = (ushort)random.Next(65000);
-                plcMemory.Four = (ushort)random.Next(65000);
-                plcMemory.Five = (ushort)random.Next(65000);
-                plcMemory.Six = (ushort)random.Next(65000);
-                plcMemory.Seven = (ushort)random.Next(65000);
-                plcMemory.Eight = (ushort)random.Next(65000);
-                plcMemory.Nine = (ushort)random.Next(65000);
+                plcMemory.Zero = (ushort)random.Next(65535);
+                plcMemory.One = (ushort)random.Next(65535);
+                plcMemory.Two = (ushort)random.Next(65535);
+                plcMemory.Three = (ushort)random.Next(65535);
+                plcMemory.Four = (ushort)random.Next(65535);
+                plcMemory.Five = (ushort)random.Next(65535);
+                plcMemory.Six = (ushort)random.Next(65535);
+                plcMemory.Seven = (ushort)random.Next(65535);
+                plcMemory.Eight = (ushort)random.Next(65535);
+                plcMemory.Nine = (ushort)random.Next(65535);
             });
         }
 
         // 시뮬레이터의 메모리 맵을 랜덤한 값으로 채우는 함수
-        private bool applySimulatorPlcMemoryMapRandom()
+        // 시뮬레이터가 생성된 이후에 호출되어야 합니다.
+        private void ApplySimulatorPlcMemoryMapRandom()
         {
             if(sim == null)
             {
-                return false;
+                return;
             }
 
             // 메모리 랜덤
             List<PLCMemory> PLCMemories;
             // 0
             PLCMemories = sim.GetMemoryMap(0);
-            if (PLCMemories == null)
-            {
-                return false;
-            }
-            applyPlcMemoryRandom(PLCMemories);
+            ApplyPlcMemoryRandom(PLCMemories);
 
             // 1
             PLCMemories = sim.GetMemoryMap(1);
-            if (PLCMemories == null)
-            {
-                return false;
-            }
-            applyPlcMemoryRandom(PLCMemories);
+            ApplyPlcMemoryRandom(PLCMemories);
 
             // 2
             PLCMemories = sim.GetMemoryMap(2);
-            if (PLCMemories == null)
-            {
-                return false;
-            }
-            applyPlcMemoryRandom(PLCMemories);
+            ApplyPlcMemoryRandom(PLCMemories);
 
             // 3
             PLCMemories = sim.GetMemoryMap(3);
-            if (PLCMemories == null)
-            {
-                return false;
-            }
-            applyPlcMemoryRandom(PLCMemories);
-            return true;
+            ApplyPlcMemoryRandom(PLCMemories);
         }
 
-        /*
-         * 랜덤 버튼이 클릭되었을 때 이벤트를 처리하는 함수
-         * 버튼의 텍스트를 이용하여 시작/정지의 상태를 구별한다.
-         * 
-         * Get Memory Mapping
-         * map_M : 0
-         * map_D : 1
-         * map_K : 2
-         * map_L : 3
-         * 
-         * Mapping
-         * zero~nine
-        */
+        // 랜덤으로 진행하는 경우
+        bool randomRunning = false;
 
-        // 주기적으로 랜덤하게 값을 채우는 기능을 처리하는 쓰레드
-        Thread threadRandom = null;
-        void startRandom()
+        // 시뮬레이터의 메모리 맵을 랜덤한 값으로 채우는 비동기 함수
+        // 시뮬레이터가 생성된 이후에 호출되어야 합니다.
+        private void ApplySimulatorPlcMemoryMapRandomSyncRepeat()
+        {
+            while (randomRunning)
+            {
+                ApplySimulatorPlcMemoryMapRandom();
+                // 1초간 대기
+                Thread.Sleep(1000);
+            }
+        }
+
+        // 시뮬레이터의 메모리 맵을 랜덤한 값으로 채우는 비동기 함수
+        // 시뮬레이터가 생성된 이후에 호출되어야 합니다.
+        async private void ApplySimulatorPlcMemoryMapRandomAsyncRepeat()
+        {
+            while (randomRunning)
+            {
+                ApplySimulatorPlcMemoryMapRandom();
+                // 1초간 양보
+                await Task.Delay(1000);
+            }
+        }
+
+        // 주기적으로 랜덤하게 값을 채우도록 설정하는 함수
+        void StartRandomValue()
         {
             // 랜덤 기능 활성화
             bt_random.Text = btRandomRunningText;
-            threadRandom = new Thread(() =>
-            {
-                while (bt_random.Text == btRandomRunningText)
-                {
-                    bool result = applySimulatorPlcMemoryMapRandom();
-                }
-                Thread.Sleep(1000);
-            });
-            threadRandom.Start();
+            randomRunning = true;
+            ApplySimulatorPlcMemoryMapRandomAsyncRepeat();
         }
 
-        void endRandom()
+        // 주기적으로 랜덤하게 값을 채우지 않도록 설정하는 함수
+        void stopRandomValue()
         {
             if (bt_random.Text == btRandomRunningText)
             {
                 // 랜덤 기능 비활성화
                 bt_random.Text = btRandomNoRunningText;
-                // 종료 대기
-                threadRandom.Join();
-                threadRandom = null;
+                randomRunning = false;
             }
         }
 
-
+        // 랜덤 시작/정지 버튼의 클릭 이벤트를 처리하는 함수
         private void bt_random_click(object sender, EventArgs e)
         {
             // 랜덤 기능이 활성화되지 않은 경우
             if (bt_random.Text == btRandomNoRunningText)
             {
-                startRandom();
+                StartRandomValue();
             }
             // 랜덤 기능이 활성화 된 경우
             else if (bt_random.Text == btRandomRunningText) {
-                endRandom();   
+                stopRandomValue();   
             }
             else
             {
@@ -502,12 +503,10 @@ namespace PLCSimulation
             }
         }
 
-        /*
-         * 한번만 랜덤으로 값을 지정하는 함수
-        */
+        // 랜덤으로 값을 지정하는 함수
         private void bt_random_once_click(object sender, EventArgs e)
         {
-            applySimulatorPlcMemoryMapRandom();
+            ApplySimulatorPlcMemoryMapRandom();
         }
     }
 }
