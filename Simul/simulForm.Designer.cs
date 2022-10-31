@@ -55,6 +55,7 @@ namespace PLCSimulation
             this.lb_State = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.bt_random = new System.Windows.Forms.Button();
+            this.bt_random_once = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -292,11 +293,22 @@ namespace PLCSimulation
             this.bt_random.UseVisualStyleBackColor = true;
             this.bt_random.Click += new System.EventHandler(this.bt_random_click);
             // 
+            // bt_random_once
+            // 
+            this.bt_random_once.Location = new System.Drawing.Point(268, 56);
+            this.bt_random_once.Name = "bt_random_once";
+            this.bt_random_once.Size = new System.Drawing.Size(115, 23);
+            this.bt_random_once.TabIndex = 25;
+            this.bt_random_once.Text = "Random Once";
+            this.bt_random_once.UseVisualStyleBackColor = true;
+            this.bt_random_once.Click += new System.EventHandler(this.bt_random_once_click);
+            // 
             // SimulForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.bt_random_once);
             this.Controls.Add(this.bt_random);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.lb_State);
@@ -352,5 +364,6 @@ namespace PLCSimulation
         private System.Windows.Forms.Label lb_State;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button bt_random;
+        private System.Windows.Forms.Button bt_random_once;
     }
 }

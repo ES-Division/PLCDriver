@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Collections.Generic;
+using System.Threading;
 
 namespace PLCSimulation
 {
@@ -373,10 +375,85 @@ namespace PLCSimulation
                 this.Top = this.MdiParent.ClientRectangle.Height - this.Height;
         }
 
+        // 매개변수로 들어온 PlcMemory 리스트를 랜덤한 값으로 채우는 함수 
+        private void applyPlcMemoryRandom(List<PLCMemory> plcMemoryList)
+        {
+            plcMemoryList.ForEach(plcMemory =>
+            {
+                Random random = new Random();
+                plcMemory.Zero = (ushort)random.Next(65000);
+                plcMemory.One = (ushort)random.Next(65000);
+                plcMemory.Two = (ushort)random.Next(65000);
+                plcMemory.Three = (ushort)random.Next(65000);
+                plcMemory.Four = (ushort)random.Next(65000);
+                plcMemory.Five = (ushort)random.Next(65000);
+                plcMemory.Six = (ushort)random.Next(65000);
+                plcMemory.Seven = (ushort)random.Next(65000);
+                plcMemory.Eight = (ushort)random.Next(65000);
+                plcMemory.Nine = (ushort)random.Next(65000);
+            });
+        }
+
+        // 시뮬레이터의 메모리 맵을 랜덤한 값으로 채우는 함수
+        private bool applySimulatorPlcMemoryMapRandom()
+        {
+            if(sim == null)
+            {
+                return false;
+            }
+
+            // 메모리 랜덤
+            List<PLCMemory> PLCMemories;
+            // 0
+            PLCMemories = sim.GetMemoryMap(0);
+            if (PLCMemories == null)
+            {
+                return false;
+            }
+            applyPlcMemoryRandom(PLCMemories);
+
+            // 1
+            PLCMemories = sim.GetMemoryMap(1);
+            if (PLCMemories == null)
+            {
+                return false;
+            }
+            applyPlcMemoryRandom(PLCMemories);
+
+            // 2
+            PLCMemories = sim.GetMemoryMap(2);
+            if (PLCMemories == null)
+            {
+                return false;
+            }
+            applyPlcMemoryRandom(PLCMemories);
+
+            // 3
+            PLCMemories = sim.GetMemoryMap(3);
+            if (PLCMemories == null)
+            {
+                return false;
+            }
+            applyPlcMemoryRandom(PLCMemories);
+            return true;
+        }
+
         /*
          * 랜덤 버튼이 클릭되었을 때 이벤트를 처리하는 함수
          * 버튼의 텍스트를 이용하여 시작/정지의 상태를 구별한다.
+         * 
+         * Get Memory Mapping
+         * map_M : 0
+         * map_D : 1
+         * map_K : 2
+         * map_L : 3
+         * 
+         * Mapping
+         * zero~nine
         */
+
+        // 주기적으로 랜덤하게 값을 채우는 기능을 처리하는 쓰레드
+        Thread threadRandom = null;
         private void bt_random_click(object sender, EventArgs e)
         {
             // 랜덤 기능이 활성화되지 않은 경우
@@ -384,17 +461,40 @@ namespace PLCSimulation
             {
                 // 랜덤 기능 활성화
                 bt_random.Text = btRandomRunningText;
+                threadRandom = new Thread(() =>
+                {
+                    while (bt_random.Text == btRandomRunningText)
+                    {
+                        bool result = applySimulatorPlcMemoryMapRandom();
+                        if (!result)
+                        {
+                            break;
+                        }
+                    }
+                });
+                threadRandom.Start();
             }
             // 랜덤 기능이 활성화 된 경우
             else if (bt_random.Text == btRandomRunningText) {
                 // 랜덤 기능 비활성화
                 bt_random.Text = btRandomNoRunningText;
+                // 종료 대기
+                threadRandom.Join();
+                threadRandom = null;
             }
             else
             {
                 // 이외의 경우
                 throw new ArgumentException("지정된 기능이 없습니다.");
             }
+        }
+
+        /*
+         * 한번만 랜덤으로 값을 지정하는 함수
+        */
+        private void bt_random_once_click(object sender, EventArgs e)
+        {
+            applySimulatorPlcMemoryMapRandom();
         }
     }
 }
