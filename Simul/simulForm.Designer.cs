@@ -56,7 +56,13 @@ namespace PLCSimulation
             this.label5 = new System.Windows.Forms.Label();
             this.bt_random = new System.Windows.Forms.Button();
             this.bt_random_once = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.nud_min_random = new System.Windows.Forms.NumericUpDown();
+            this.nud_max_random = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_min_random)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_max_random)).BeginInit();
             this.SuspendLayout();
             // 
             // label4
@@ -74,7 +80,7 @@ namespace PLCSimulation
             this.cb_memoryArea.FormattingEnabled = true;
             this.cb_memoryArea.Location = new System.Drawing.Point(110, 56);
             this.cb_memoryArea.Name = "cb_memoryArea";
-            this.cb_memoryArea.Size = new System.Drawing.Size(121, 23);
+            this.cb_memoryArea.Size = new System.Drawing.Size(112, 23);
             this.cb_memoryArea.TabIndex = 20;
             this.cb_memoryArea.TabStop = false;
             this.cb_memoryArea.SelectedIndexChanged += new System.EventHandler(this.cb_memoryArea_SelectedIndexChanged);
@@ -93,7 +99,7 @@ namespace PLCSimulation
             // lb_Mode
             // 
             this.lb_Mode.AutoSize = true;
-            this.lb_Mode.Location = new System.Drawing.Point(474, 23);
+            this.lb_Mode.Location = new System.Drawing.Point(418, 24);
             this.lb_Mode.Name = "lb_Mode";
             this.lb_Mode.Size = new System.Drawing.Size(36, 15);
             this.lb_Mode.TabIndex = 18;
@@ -102,7 +108,7 @@ namespace PLCSimulation
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(429, 23);
+            this.label3.Location = new System.Drawing.Point(376, 24);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(49, 15);
             this.label3.TabIndex = 17;
@@ -210,15 +216,15 @@ namespace PLCSimulation
             // tb_Port
             // 
             this.tb_Port.Enabled = false;
-            this.tb_Port.Location = new System.Drawing.Point(303, 21);
+            this.tb_Port.Location = new System.Drawing.Point(263, 23);
             this.tb_Port.Name = "tb_Port";
-            this.tb_Port.Size = new System.Drawing.Size(80, 23);
+            this.tb_Port.Size = new System.Drawing.Size(107, 23);
             this.tb_Port.TabIndex = 14;
             // 
             // tb_IP
             // 
             this.tb_IP.Enabled = false;
-            this.tb_IP.Location = new System.Drawing.Point(93, 21);
+            this.tb_IP.Location = new System.Drawing.Point(81, 23);
             this.tb_IP.Name = "tb_IP";
             this.tb_IP.Size = new System.Drawing.Size(141, 23);
             this.tb_IP.TabIndex = 15;
@@ -226,7 +232,7 @@ namespace PLCSimulation
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(268, 24);
+            this.label2.Location = new System.Drawing.Point(228, 26);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(29, 15);
             this.label2.TabIndex = 12;
@@ -235,7 +241,7 @@ namespace PLCSimulation
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(24, 24);
+            this.label1.Location = new System.Drawing.Point(12, 27);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(63, 15);
             this.label1.TabIndex = 13;
@@ -268,7 +274,7 @@ namespace PLCSimulation
             this.lb_State.AutoSize = true;
             this.lb_State.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.lb_State.ForeColor = System.Drawing.Color.Red;
-            this.lb_State.Location = new System.Drawing.Point(474, 59);
+            this.lb_State.Location = new System.Drawing.Point(507, 22);
             this.lb_State.Name = "lb_State";
             this.lb_State.Size = new System.Drawing.Size(36, 15);
             this.lb_State.TabIndex = 22;
@@ -277,7 +283,7 @@ namespace PLCSimulation
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(429, 59);
+            this.label5.Location = new System.Drawing.Point(460, 23);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(41, 15);
             this.label5.TabIndex = 23;
@@ -303,11 +309,62 @@ namespace PLCSimulation
             this.bt_random_once.UseVisualStyleBackColor = true;
             this.bt_random_once.Click += new System.EventHandler(this.bt_random_once_click);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(382, 59);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(79, 15);
+            this.label6.TabIndex = 28;
+            this.label6.Text = "Max Random";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(228, 59);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(77, 15);
+            this.label7.TabIndex = 29;
+            this.label7.Text = "Min Random";
+            // 
+            // nud_min_random
+            // 
+            this.nud_min_random.Location = new System.Drawing.Point(305, 57);
+            this.nud_min_random.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.nud_min_random.Name = "nud_min_random";
+            this.nud_min_random.Size = new System.Drawing.Size(71, 23);
+            this.nud_min_random.TabIndex = 30;
+            this.nud_min_random.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // nud_max_random
+            // 
+            this.nud_max_random.Location = new System.Drawing.Point(467, 55);
+            this.nud_max_random.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.nud_max_random.Name = "nud_max_random";
+            this.nud_max_random.Size = new System.Drawing.Size(74, 23);
+            this.nud_max_random.TabIndex = 31;
+            // 
             // SimulForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.nud_max_random);
+            this.Controls.Add(this.nud_min_random);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.bt_random_once);
             this.Controls.Add(this.bt_random);
             this.Controls.Add(this.label5);
@@ -332,6 +389,8 @@ namespace PLCSimulation
             this.Click += new System.EventHandler(this.bt_random_click);
             this.Move += new System.EventHandler(this.SimulForm_Move);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_min_random)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_max_random)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -365,5 +424,9 @@ namespace PLCSimulation
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button bt_random;
         private System.Windows.Forms.Button bt_random_once;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.NumericUpDown nud_min_random;
+        private System.Windows.Forms.NumericUpDown nud_max_random;
     }
 }

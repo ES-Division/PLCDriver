@@ -149,6 +149,9 @@ namespace PLCSimulation
 
             this.Text = "Simulator";
             this.bt_random.Text = btRandomNoRunningText;
+
+            nud_min_random.Value = 1;
+            nud_max_random.Value = 65535;
         }
 
         private void bt_Setting_Click(object sender, EventArgs e)
@@ -391,21 +394,24 @@ namespace PLCSimulation
        */
 
         // 매개변수로 들어온 PlcMemory 리스트를 랜덤한 값으로 채우는 함수 
-        static private void ApplyPlcMemoryRandom(List<PLCMemory> plcMemoryList)
+        private void ApplyPlcMemoryRandom(List<PLCMemory> plcMemoryList)
         {
+            int minRandom = (int)nud_min_random.Value;
+            int maxRandom = (int)nud_max_random.Value;
+
             plcMemoryList.ForEach(plcMemory =>
             {
                 Random random = new Random();
-                plcMemory.Zero = (ushort)random.Next(65535);
-                plcMemory.One = (ushort)random.Next(65535);
-                plcMemory.Two = (ushort)random.Next(65535);
-                plcMemory.Three = (ushort)random.Next(65535);
-                plcMemory.Four = (ushort)random.Next(65535);
-                plcMemory.Five = (ushort)random.Next(65535);
-                plcMemory.Six = (ushort)random.Next(65535);
-                plcMemory.Seven = (ushort)random.Next(65535);
-                plcMemory.Eight = (ushort)random.Next(65535);
-                plcMemory.Nine = (ushort)random.Next(65535);
+                plcMemory.Zero = (ushort)random.Next(minRandom, maxRandom);
+                plcMemory.One = (ushort)random.Next(minRandom, maxRandom);
+                plcMemory.Two = (ushort)random.Next(minRandom, maxRandom);
+                plcMemory.Three = (ushort)random.Next(minRandom, maxRandom);
+                plcMemory.Four = (ushort)random.Next(minRandom, maxRandom);
+                plcMemory.Five = (ushort)random.Next(minRandom, maxRandom);
+                plcMemory.Six = (ushort)random.Next(minRandom, maxRandom);
+                plcMemory.Seven = (ushort)random.Next(minRandom, maxRandom);
+                plcMemory.Eight = (ushort)random.Next(minRandom, maxRandom);
+                plcMemory.Nine = (ushort)random.Next(minRandom, maxRandom);
             });
         }
 
@@ -520,5 +526,6 @@ namespace PLCSimulation
             // 메모리 맵을 랜덤으로 채우기
             ApplySimulatorPlcMemoryMapRandom();
         }
+
     }
 }
